@@ -1,112 +1,290 @@
+"use client";
+
 import Image from "next/image";
+import React, { useState } from "react";
+import {
+  Home2,
+  Card,
+  Category,
+  Barcode,
+  People,
+  Cake,
+  Note,
+  EmptyWallet,
+  WalletCheck,
+  Strongbox2,
+  Blogger,
+  Stickynote,
+  HambergerMenu,
+  BatteryFull,
+  LoginCurve,
+  Notification,
+  SearchNormal1,
+} from "iconsax-react";
+import {
+  Select,
+  SelectItem,
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Input,
+  Button,
+  DropdownTrigger,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Chip,
+  User,
+  Pagination,
+  Selection,
+  ChipProps,
+  SortDescriptor,
+} from "@nextui-org/react";
+import { PlusIcon } from "./PlusIcon";
+import { VerticalDotsIcon } from "./VerticalDotsIcon";
+import { ChevronDownIcon } from "./ChevronDownIcon";
+import { SearchIcon } from "./SearchIcon";
+import { columns, users, statusOptions } from "./data";
+import { capitalize } from "./utils";
+import TableHead from "./Table";
 
 export default function Home() {
+  const [open, setOpen] = React.useState(false);
+  const [items, setItems] = useState([
+    { id: 1, name: "Home", image: Home2 },
+    { id: 2, name: "Cadastro", image: Card },
+    { id: 3, name: "Categoria", image: Category },
+
+    { id: 4, name: "Produtos", image: Barcode },
+
+    { id: 5, name: "Usuários", image: People },
+
+    { id: 6, name: "Estabelecimentos", image: Cake },
+  ]);
+
+  const [item, setItem] = useState([
+    { id: 7, name: "Relatórios", image: Note },
+    { id: 8, name: "Relatório De Vendas", image: Card },
+    { id: 9, name: "Forma De Recebimentos", image: EmptyWallet },
+
+    { id: 10, name: "Forma De Balcão", image: WalletCheck },
+
+    { id: 11, name: "Log De Entrada Na Mesa", image: Strongbox2 },
+
+    { id: 12, name: "Pedidos", image: Blogger },
+    { id: 13, name: "Estoque", image: Stickynote },
+  ]);
+  // State to keep track of the active item
+  const [activeItemId, setActiveItemId] = useState(1);
+
+  // Function to handle item click
+  const handleItemClick = (id: number) => {
+    setActiveItemId(id);
+  };
+
+  const animals = [
+    {
+      label: "Estabelecimento",
+      value: "estabelecimento",
+      description: "The largest land animal",
+    },
+    {
+      label: "Tipo De Usuário",
+      value: "tipo De Usuário",
+      description: "The king of the jungle",
+    },
+    {
+      label: "Status",
+      value: "status",
+      description: "The tallest land animal",
+    },
+  ];
+
+  const statusColorMap: Record<string, ChipProps["color"]> = {
+    active: "success",
+    paused: "danger",
+    vacation: "warning",
+  };
+
+  const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+
+  type User = (typeof users)[0];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="flex min-h-screen flex-row font-[Inter]">
+      {open ? (
+        <div className="w-[30px] h-screen bg-[#000000] pt-4 cursor-pointer">
+          <HambergerMenu
+            size="28"
+            color="#FFFFFF"
+            onClick={() => setOpen(false)}
+          />
         </div>
-      </div>
+      ) : (
+        <div className="w-[250px] h-screen bg-[#D91D1D] p-4 ">
+          <div className="w-full flex-col flex items-center">
+            <Image
+              src="/(Logo) RedTie 1.png"
+              alt="logo"
+              width={64}
+              height={64}
+            />
+          </div>
+          <div className="mt-4">
+            <div className="text-[#FFFFFFA1] text-[9px] font-normal">
+              Bem-vindo,
+            </div>
+            <div className="text-[#F2F2F7] text-[13px] font-medium">
+              Luan Bani
+            </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+            <div className="mt-4 ml-4 relative">
+              <ul className="list-disc ">
+                <li className="text-[#F2F2F7] text-[10px] font-semibold">
+                  Home
+                </li>
+                <li className="text-[#F2F2F7] mt-2 text-[10px] font-semibold">
+                  Cadastros
+                </li>
+              </ul>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+              <HambergerMenu
+                size="18"
+                color="#FFFFFF"
+                className=" absolute right-0 top-0 cursor-pointer"
+                onClick={() => setOpen(true)}
+              />
+            </div>
+
+            <div className="mt-8">
+              <div className="text-[#FFFFFF66] text-[10px] font-normal">
+                Dashboards
+              </div>
+
+              <div className="flex flex-col gap-1 mt-2 ">
+                {items.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`w-full h-[30px]  rounded-[6px] flex flex-row items-center ${
+                      activeItemId === item.id
+                        ? "bg-[#0000000D] "
+                        : "bg-[#D91D1D]"
+                    }`}
+                    onClick={() => handleItemClick(item.id)}
+                  >
+                    {activeItemId === item.id && (
+                      <Image
+                        src="/Rectangle 1.png"
+                        alt="logo"
+                        width={3}
+                        height={11}
+                      />
+                    )}
+                    <div className="flex flex-row cursor-pointer items-center ml-6">
+                      <item.image size="15" color="#F2F2F7" />
+
+                      <div className="text-[#F2F2F7] text-[10px] font-semibold ml-2">
+                        {item.name}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-1 mt-5 ">
+                {item.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`w-full h-[30px]  rounded-[6px] flex flex-row items-center ${
+                      activeItemId === item.id
+                        ? "bg-[#0000000D] "
+                        : "bg-[#D91D1D]"
+                    }`}
+                    onClick={() => handleItemClick(item.id)}
+                  >
+                    {activeItemId === item.id && (
+                      <Image
+                        src="/Rectangle 1.png"
+                        alt="logo"
+                        width={3}
+                        height={11}
+                      />
+                    )}
+                    <div className="flex flex-row cursor-pointer items-center ml-6">
+                      <item.image size="15" color="#F2F2F7" />
+
+                      <div className="text-[#F2F2F7] text-[10px] font-semibold ml-2">
+                        {item.name}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="w-full">
+        <div className="w-full py-4 px-8 h-[52px] shadow-lg border-b bordeer-[#0000001A] ">
+          <div className="flex flex-row justify-between">
+            <div className="flex flex-row items-center gap-2">
+              <BatteryFull size="20" color="#1C1C1C" />
+
+              <div className="text-[#00000066] font-normal text-[10px]">
+                Usuários
+              </div>
+              <div className="text-[#00000033] font-normal text-[10px]">/</div>
+              <div className=" font-normal text-[10px] text-[#1C1C1C]">
+                Gestão de Pessoas
+              </div>
+            </div>
+            <div className="text-[#000000] font-bold text-[16px]">
+              McDonald&apos;s
+            </div>
+            <div className="flex flex-row items-center gap-2">
+              <div className="relative w-[150px] h-[20px] flex items-center rounded-[5.83px] p-2 bg-[#0000000D]">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  id="search"
+                  className=" bg-[#0000000D] ml-3 outline-none  text-[#00000033] font-normal text-[10px]  "
+                ></input>
+
+                <SearchNormal1
+                  size="10"
+                  color="#FFFFFF"
+                  className="absolute left-0 top-1 ml-1"
+                />
+                <Barcode
+                  size="10"
+                  color="#FFFFFF"
+                  className="absolute right-0 top-1 ml-1"
+                />
+              </div>
+
+              <Notification size="20" color="#000000" />
+              <div className="text-[#00000033] font-normal text-[10px]">/</div>
+              <LoginCurve size="20" color="#000000" />
+            </div>
+          </div>
+        </div>
+
+        {/* <Select
+          items={animals}
+          label="Search Filters"
+          className="max-w-[151px] mt-4 ml-4 "
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+          {(animal) => (
+            <SelectItem key={animal.value}>{animal.label}</SelectItem>
+          )}
+        </Select> */}
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        <div className="p-8">
+          <TableHead />
+        </div>
       </div>
     </main>
   );
